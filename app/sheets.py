@@ -7,7 +7,7 @@ from app import db
 
 logger = logging.getLogger("fehmina.sheets")
 
-# Structured Columns expected in Google Sheet
+# Structured Columns expected in Google Sheet (18 Columns)
 SHEET_COLUMNS = [
     "Submission ID",
     "Timestamp",
@@ -15,7 +15,6 @@ SHEET_COLUMNS = [
     "Patient Phone",
     "Patient Address",
     "Department",
-    "Ward",
     "Overall Rating",
     "Doctor & Medical Care Rating",
     "Doctor Communication Rating",
@@ -27,22 +26,18 @@ SHEET_COLUMNS = [
     "Waiting Time Rating",
     "Written Feedback",
     "Staff of the Month Nomination",
-    "Staff Appreciation Reason",
-    "Google Review Clicked",
-    "Follow-up Status",
-    "Follow-up Notes"
+    "Staff Appreciation Reason"
 ]
 
 def format_row_from_submission(data: dict) -> list:
-    """Format a submission dict into ordered Google Sheet row cells"""
+    """Format a submission dict into ordered Google Sheet row cells (18 columns)"""
     return [
         str(data.get("id", "")),
         str(data.get("timestamp", "")),
         str(data.get("patient_name", "")),
         str(data.get("patient_phone", "")),
         str(data.get("patient_address", "")),
-        str(data.get("department", "General")),
-        str(data.get("ward", "General")),
+        str(data.get("department", "")),
         data.get("overall_rating", ""),
         data.get("doctor_rating", ""),
         data.get("doctor_communication_rating", ""),
@@ -54,10 +49,7 @@ def format_row_from_submission(data: dict) -> list:
         data.get("waiting_time_rating", ""),
         str(data.get("written_feedback", "")),
         str(data.get("staff_of_month_name_text", "")),
-        str(data.get("staff_appreciation_reason", "")),
-        "Yes" if data.get("google_review_clicked") in [1, True, "1", "true"] else "No",
-        str(data.get("followup_status", "not_required")),
-        str(data.get("followup_notes", ""))
+        str(data.get("staff_appreciation_reason", ""))
     ]
 
 def send_to_webhook(webhook_url: str, payload: dict) -> dict:

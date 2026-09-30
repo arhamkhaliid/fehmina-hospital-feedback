@@ -150,15 +150,14 @@ document.addEventListener('DOMContentLoaded', () => {
     staff_appreciation_reason: ''
   };
 
-  // 1. Parse URL Parameters (?dept=IPD&ward=General)
+  // 1. Parse URL Parameters (?dept=Chest)
   const urlParams = new URLSearchParams(window.location.search);
   const paramDept = urlParams.get('dept') || '';
-  const paramWard = urlParams.get('ward') || '';
   const paramSource = urlParams.get('source') || 'hospital_ipad';
 
-  if (paramDept || paramWard) {
+  if (paramDept) {
     sourceTagBox.classList.remove('hidden');
-    sourceTagText.textContent = [paramDept, paramWard].filter(Boolean).join(' • ');
+    sourceTagText.textContent = paramDept;
   }
 
   // 2. View Switching Helper
@@ -425,30 +424,26 @@ document.addEventListener('DOMContentLoaded', () => {
     currentSubmissionId = generateRefId();
     const currentTimestamp = getCurrentTimestampStr();
 
-    // Prepare Google Sheets Row Data Payload
+    // Prepare Authoritative 18-Column Google Sheets Row Data (Strictly slots 0 to 17)
     const rowData = [
       currentSubmissionId,
       currentTimestamp,
-      userAnswers.patient_name,
-      userAnswers.patient_phone,
-      userAnswers.patient_address,
-      userAnswers.department || paramDept || 'General',
-      paramWard || 'General',
-      userAnswers.overall_rating,
-      userAnswers.doctor_rating,
-      userAnswers.doctor_communication_rating,
-      userAnswers.nursing_rating,
-      userAnswers.staff_behaviour_rating,
-      userAnswers.cleanliness_rating,
-      userAnswers.room_ward_rating,
-      userAnswers.billing_discharge_rating,
-      userAnswers.waiting_time_rating,
+      userAnswers.patient_name || '',
+      userAnswers.patient_phone || '',
+      userAnswers.patient_address || '',
+      userAnswers.department || paramDept || '',
+      userAnswers.overall_rating !== null && userAnswers.overall_rating !== undefined ? userAnswers.overall_rating : '',
+      userAnswers.doctor_rating !== null && userAnswers.doctor_rating !== undefined ? userAnswers.doctor_rating : '',
+      userAnswers.doctor_communication_rating !== null && userAnswers.doctor_communication_rating !== undefined ? userAnswers.doctor_communication_rating : '',
+      userAnswers.nursing_rating !== null && userAnswers.nursing_rating !== undefined ? userAnswers.nursing_rating : '',
+      userAnswers.staff_behaviour_rating !== null && userAnswers.staff_behaviour_rating !== undefined ? userAnswers.staff_behaviour_rating : '',
+      userAnswers.cleanliness_rating !== null && userAnswers.cleanliness_rating !== undefined ? userAnswers.cleanliness_rating : '',
+      userAnswers.room_ward_rating !== null && userAnswers.room_ward_rating !== undefined ? userAnswers.room_ward_rating : '',
+      userAnswers.billing_discharge_rating !== null && userAnswers.billing_discharge_rating !== undefined ? userAnswers.billing_discharge_rating : '',
+      userAnswers.waiting_time_rating !== null && userAnswers.waiting_time_rating !== undefined ? userAnswers.waiting_time_rating : '',
       userAnswers.written_feedback || '',
       userAnswers.staff_of_month_name_text || '',
-      userAnswers.staff_appreciation_reason || '',
-      "No",
-      "not_required",
-      ""
+      userAnswers.staff_appreciation_reason || ''
     ];
 
     const gasPayload = {

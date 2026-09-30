@@ -250,8 +250,8 @@ class TestFehminaHospitalSystem(unittest.TestCase):
             self.assertNotIn("canteen", col)
             self.assertNotIn("meal", col)
 
-    def test_12_google_sheets_22_columns_mapping(self):
-        """Verify that Google Sheets formatting outputs exactly 22 columns with Patient Name, Phone, and Address"""
+    def test_12_google_sheets_18_columns_mapping(self):
+        """Verify that Google Sheets formatting outputs exactly 18 columns with Patient Name, Phone, and Address"""
         sample_sub = {
             "id": "FH-20260930-TEST1",
             "timestamp": "2026-09-30 03:00:00",
@@ -259,7 +259,6 @@ class TestFehminaHospitalSystem(unittest.TestCase):
             "patient_phone": "9876543210",
             "patient_address": "Aliganj, Lucknow",
             "department": "Emergency",
-            "ward": "Trauma Ward 2",
             "overall_rating": 5,
             "doctor_rating": 5,
             "doctor_communication_rating": 4,
@@ -271,24 +270,33 @@ class TestFehminaHospitalSystem(unittest.TestCase):
             "waiting_time_rating": 4,
             "written_feedback": "Dr. Ahmed and Nurse Sana were extremely helpful.",
             "staff_of_month_name_text": "Nurse Sana",
-            "staff_appreciation_reason": "Very compassionate and attentive throughout.",
-            "google_review_clicked": 1,
-            "followup_status": "not_required",
-            "followup_notes": "None"
+            "staff_appreciation_reason": "Very compassionate and attentive throughout."
         }
         
         row = sheets.format_row_from_submission(sample_sub)
-        self.assertEqual(len(row), 22)
-        self.assertEqual(len(sheets.SHEET_COLUMNS), 22)
+        self.assertEqual(len(row), 18)
+        self.assertEqual(len(sheets.SHEET_COLUMNS), 18)
         
         # Verify specific mappings
         self.assertEqual(row[0], "FH-20260930-TEST1")
+        self.assertEqual(row[1], "2026-09-30 03:00:00")
         self.assertEqual(row[2], "Ramesh Kumar")
         self.assertEqual(row[3], "9876543210")
         self.assertEqual(row[4], "Aliganj, Lucknow")
-        self.assertEqual(row[7], 5)
-        self.assertEqual(row[17], "Nurse Sana")
-        self.assertEqual(row[19], "Yes")
+        self.assertEqual(row[5], "Emergency")
+        self.assertEqual(row[6], 5)
+        self.assertEqual(row[12], 4) # Room / Ward Rating
+        self.assertEqual(row[16], "Nurse Sana")
+        self.assertEqual(row[17], "Very compassionate and attentive throughout.")
+        
+        # Verify removed fields are not in SHEET_COLUMNS
+        self.assertNotIn("Ward", sheets.SHEET_COLUMNS)
+        self.assertNotIn("Google Review Clicked", sheets.SHEET_COLUMNS)
+        self.assertNotIn("Follow-up Status", sheets.SHEET_COLUMNS)
+        self.assertNotIn("Follow-up Notes", sheets.SHEET_COLUMNS)
+        
+        # Verify Room / Ward Rating is preserved
+        self.assertIn("Room / Ward Rating", sheets.SHEET_COLUMNS)
         
         # Verify no food in sheet headers
         for h in sheets.SHEET_COLUMNS:

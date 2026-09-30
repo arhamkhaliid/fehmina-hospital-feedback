@@ -91,15 +91,14 @@ def validate_submission_payload(data: dict) -> dict:
         raise ValueError("Kripya patient ka address enter karein")
     
     # Department & Tracking
-    department = sanitize_text(data.get('department', 'General'), 50)
-    ward = sanitize_text(data.get('ward', 'General'), 50)
+    department = sanitize_text(data.get('department', ''), 100)
     source_qr = sanitize_text(data.get('source_qr', 'direct'), 50)
     
     return {
         'id': generate_submission_id(),
         'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         'department': department,
-        'ward': ward,
+        'ward': '',
         'overall_rating': overall_rating,
         'doctor_rating': doctor_rating,
         'doctor_communication_rating': doctor_communication_rating,
