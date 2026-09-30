@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Printable QR Feedback Poster | Fehmina Hospital</title>
+  <link rel="stylesheet" href="/css/poster.css">
+  <link rel="icon" href="/images/logo.png" type="image/png">
+  <script src="/js/qrcode.min.js"></script>
+</head>
+<body>
+
+  <!-- Controls Bar (Hidden during print) -->
+  <div class="poster-controls no-print">
+    <div class="controls-inner">
+      <div class="control-item">
+        <label for="poster-dept-select">Department / Ward Tag:</label>
+        <select id="poster-dept-select" class="control-input">
+          <option value="">General (Hospital-wide)</option>
+          <option value="OPD">OPD Consultation Area</option>
+          <option value="Billing">Billing & Discharge Counter</option>
+          <option value="Emergency">Emergency & Trauma</option>
+          <option value="ICU">ICU / HDU</option>
+          <option value="IPD">In-Patient Wards</option>
+        </select>
+      </div>
+
+      <div class="control-item">
+        <label for="poster-size-select">Print Layout:</label>
+        <select id="poster-size-select" class="control-input">
+          <option value="a4">Standard A4 Poster (Full Page)</option>
+          <option value="tabletop">A5 Countertop / Standee</option>
+        </select>
+      </div>
+
+      <div class="control-actions">
+        <button id="btn-print-poster" class="btn-print">🖨️ Print Poster</button>
+        <a href="/admin" class="btn-back">← Back to Dashboard</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Printable Poster Sheet -->
+  <div class="poster-sheet-wrap">
+    <div id="poster-sheet" class="poster-sheet a4-layout">
+      
+      <div class="poster-border-frame">
+
+        <!-- Header Brand -->
+        <div class="poster-header">
+          <div class="poster-logo-wrap">
+            <img src="/images/logo.png" alt="Fehmina Hospital Logo" class="poster-logo">
+          </div>
+          <p class="poster-hospital-address">Lucknow, Uttar Pradesh • Established 2001</p>
+        </div>
+
+        <!-- Main Headline -->
+        <div class="poster-main-callout">
+          <h1 class="poster-headline">Humara experience batayein ❤️</h1>
+          <p class="poster-subheadline">Aapki ray humare liye sabse zaroori hai</p>
+          <div class="poster-time-badge">⏱️ Sirf 2 minute lagenge.</div>
+        </div>
+
+        <!-- QR Code Display -->
+        <div class="poster-qr-section">
+          <div class="qr-frame">
+            <div id="qrcode-target" class="qr-canvas-wrap"></div>
+            <div class="qr-center-hint">Scan with any Camera or QR App</div>
+          </div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="poster-instructions">
+          <div class="instruction-box">
+            <h2 class="inst-title">Scan karein aur apna feedback share karein.</h2>
+            <p class="inst-steps">Apne smartphone camera ya Google Lens se scan karein aur direct feedback dein.</p>
+          </div>
+        </div>
+
+        <!-- Department location tag -->
+        <div id="poster-location-tag" class="poster-location-tag hidden">
+          Location: <strong id="location-name-display">OPD</strong>
+        </div>
+
+        <!-- Footer -->
+        <div class="poster-footer">
+          <p class="footer-p1"><strong>FEHMINA HOSPITAL & TRAUMA CENTRE</strong></p>
+          <p class="footer-p2">Dedicated to compassionate, high-quality patient care.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <script src="/js/poster.js"></script>
+</body>
+</html>

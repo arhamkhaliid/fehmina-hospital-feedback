@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Patient Experience | Fehmina Hospital & Trauma Centre, Lucknow</title>
+  <meta name="description" content="Fehmina Hospital & Trauma Centre, Lucknow - Digital Patient Experience & Feedback">
+  <meta name="theme-color" content="#F7F5EE">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="/images/logo.png" type="image/png">
+</head>
+<body>
+
+  <!-- Ambient Organic Hospital Backdrop -->
+  <div class="ambient-backdrop" aria-hidden="true">
+    <div class="ambient-shape shape-1"></div>
+    <div class="ambient-shape shape-2"></div>
+  </div>
+
+  <div class="app-viewport">
+
+    <!-- Centered Brand Header -->
+    <header class="app-header">
+      <div class="header-inner-centered">
+        
+        <!-- Centered Logo Signature -->
+        <a href="/patient" class="brand-link-centered" aria-label="Fehmina Hospital & Trauma Centre">
+          <img src="/images/logo.png" alt="Fehmina Hospital & Trauma Centre" class="hospital-logo" width="150" height="112">
+        </a>
+
+        <!-- Centered Meta & Step Status -->
+        <div class="header-sub-bar">
+          <span class="hospital-sub-tag">Fehmina Hospital • Lucknow</span>
+          <span id="step-indicator" class="step-indicator hidden">1 / 9</span>
+        </div>
+
+      </div>
+
+      <!-- Understated Progress Line -->
+      <div class="progress-track-wrap">
+        <div id="progress-bar-fill" class="progress-track-fill" style="width: 0%;"></div>
+      </div>
+    </header>
+
+    <!-- Main Guided Stage -->
+    <main class="stage-container">
+
+      <!-- STEP 0: Welcome / Intro Screen -->
+      <section id="step-welcome" class="flow-step active">
+        <div class="step-content text-center">
+          
+          <div class="intro-badge-pill">Patient Feedback</div>
+          
+          <h1 class="editorial-hero-title">Share Your<br>Experience</h1>
+          
+          <p class="editorial-hero-sub">Help us make your experience at Fehmina Hospital even better.</p>
+          
+          <div id="source-tag-box" class="location-badge hidden">
+            <span id="source-tag-text">Discharge Feedback</span>
+          </div>
+
+          <div class="action-dock">
+            <button type="button" id="btn-start-flow" class="btn-flow-primary btn-ipad-hero">
+              <span>Start Feedback</span>
+              <span class="arrow-glyph">→</span>
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- STEP 1: Patient Information (Mandatory) -->
+      <section id="step-patient-info" class="flow-step hidden">
+        <div class="step-content">
+          
+          <div class="intro-badge-pill">Patient Details</div>
+          
+          <h2 class="editorial-question-text">
+            Apni details fill karein
+          </h2>
+
+          <div class="form-fields-stack">
+            <div class="field-item">
+              <label for="patient_name" class="field-label-clean">Patient ka Naam <span class="req-dot">*</span></label>
+              <input type="text" id="patient_name" class="editorial-input" placeholder="Patient ka pura naam" autocomplete="off" required>
+            </div>
+
+            <div class="field-item">
+              <label for="patient_phone" class="field-label-clean">Mobile Number <span class="req-dot">*</span></label>
+              <input type="tel" id="patient_phone" class="editorial-input" placeholder="10-digit mobile number" maxlength="13" autocomplete="off" required>
+            </div>
+
+            <div class="field-item">
+              <label for="patient_department" class="field-label-clean">Department / Bimari ya Problem <span class="req-dot">*</span></label>
+              <select id="patient_department" class="editorial-input editorial-select" required>
+                <option value="">Select Department / Specialty</option>
+                <option value="Chest / Respiratory / Pulmonology">Chest / Respiratory / Pulmonology (Chhati / Saans ki bimari)</option>
+                <option value="Neurology & Neuro Surgery">Neurology & Neuro Surgery (Dimag / Naso ki bimari)</option>
+                <option value="Orthopaedics & Joint Replacement">Orthopaedics (Haddi aur Jod)</option>
+                <option value="General Medicine">General Medicine (Fever, Sugar, BP, Viral)</option>
+                <option value="General & Laparoscopic Surgery">General & Laparoscopic Surgery (Operation)</option>
+                <option value="Gynaecology & Obstetrics">Gynaecology & Obstetrics (Maternity / Mahila Rog)</option>
+                <option value="Pediatrics & Neonatology">Pediatrics (Bachho ke Doctor)</option>
+                <option value="Cardiology">Cardiology (Dil ki bimari)</option>
+                <option value="Urology & Nephrology">Urology & Kidney</option>
+                <option value="Emergency & Trauma Care">Emergency & Trauma</option>
+                <option value="ICU / Critical Care">ICU / Critical Care</option>
+                <option value="Other">Other / Doosra Department ya Condition</option>
+              </select>
+            </div>
+
+            <div class="field-item hidden" id="custom-dept-wrap">
+              <label for="patient_custom_dept" class="field-label-clean">Department / Medical Problem ka Naam</label>
+              <input type="text" id="patient_custom_dept" class="editorial-input" placeholder="Yahan department ya problem likhein" autocomplete="off">
+            </div>
+
+            <div class="field-item">
+              <label for="patient_address" class="field-label-clean">Address / Pata <span class="req-dot">*</span></label>
+              <textarea id="patient_address" class="editorial-textarea" rows="2" placeholder="Patient ka address ya shehar/area" autocomplete="off" required></textarea>
+            </div>
+
+            <div id="patient-info-error" class="val-error-banner hidden" role="alert">
+              <span id="patient-info-error-msg">Kripya sabhi details (Naam, valid 10-digit Phone, Department aur Address) bharein.</span>
+            </div>
+          </div>
+
+          <div class="action-dock-split">
+            <button type="button" id="btn-back-to-welcome" class="btn-flow-ghost">← Back</button>
+            <button type="button" id="btn-next-patient-info" class="btn-flow-primary">
+              <span>Aage</span>
+              <span class="arrow-glyph">→</span>
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- STEP 1 to 9: Guided One-at-a-time Question Screens -->
+      <section id="step-question" class="flow-step hidden">
+        <div class="step-content">
+          
+          <div class="question-meta-row">
+            <span class="q-category-tag" id="q-category-display">Overall Experience</span>
+          </div>
+
+          <h2 class="editorial-question-text" id="q-text-display">
+            Aapka Fehmina Hospital mein overall experience kaisa raha?
+          </h2>
+          
+          <p class="question-hint hidden" id="q-hint-display"></p>
+
+          <!-- 5 Clean Selectable Rating Points -->
+          <div class="rating-scale-container" role="radiogroup" aria-label="Rating scale from 1 to 5">
+            
+            <div class="rating-point-row">
+              
+              <button type="button" class="rating-pill-btn" data-rating="1" aria-label="1 - Very Poor">
+                <span class="pill-number">1</span>
+                <span class="pill-label">Very Poor</span>
+              </button>
+
+              <button type="button" class="rating-pill-btn" data-rating="2" aria-label="2 - Poor">
+                <span class="pill-number">2</span>
+                <span class="pill-label">Poor</span>
+              </button>
+
+              <button type="button" class="rating-pill-btn" data-rating="3" aria-label="3 - Average">
+                <span class="pill-number">3</span>
+                <span class="pill-label">Average</span>
+              </button>
+
+              <button type="button" class="rating-pill-btn" data-rating="4" aria-label="4 - Good">
+                <span class="pill-number">4</span>
+                <span class="pill-label">Good</span>
+              </button>
+
+              <button type="button" class="rating-pill-btn" data-rating="5" aria-label="5 - Excellent">
+                <span class="pill-number">5</span>
+                <span class="pill-label">Excellent</span>
+              </button>
+
+            </div>
+
+            <div class="scale-legend">
+              <span>1 = Very Poor</span>
+              <span>5 = Excellent</span>
+            </div>
+
+          </div>
+
+          <!-- Bottom Navigation Controls for question step -->
+          <div class="step-nav-bar">
+            <button type="button" id="btn-prev-question" class="btn-nav-back">
+              ← Back
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- STEP 10: Written Feedback (Optional) -->
+      <section id="step-written" class="flow-step hidden">
+        <div class="step-content">
+          
+          <span class="q-category-tag">Your Comments</span>
+          <h2 class="editorial-question-text">
+            Aap apna feedback hamare saath share karein.
+          </h2>
+          <p class="question-hint">Aapka feedback humein aur behtar banane mein madad karta hai.</p>
+
+          <div class="input-editorial-wrap">
+            <textarea id="written_feedback" class="editorial-textarea" rows="4" placeholder="Apna experience ya suggestion yahan likhein..." autocomplete="off"></textarea>
+          </div>
+
+          <div class="action-dock-split">
+            <button type="button" id="btn-back-to-q9" class="btn-flow-ghost">← Back</button>
+            <div class="action-right-group">
+              <button type="button" id="btn-skip-written" class="btn-flow-secondary">Skip</button>
+              <button type="button" id="btn-next-written" class="btn-flow-primary">
+                <span>Aage</span>
+                <span class="arrow-glyph">→</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- STEP 11: Staff Recognition & Final Submit -->
+      <section id="step-staff" class="flow-step hidden">
+        <div class="step-content">
+          
+          <div class="appreciation-icon-pill">Staff Appreciation</div>
+          <h2 class="editorial-question-text">
+            Koi staff member aapko khaas taur par achha laga?
+          </h2>
+          <p class="question-hint">Unka naam yahan share karein.</p>
+
+          <div class="form-fields-stack">
+            <div class="field-item">
+              <label for="staff_of_month_name_text" class="field-label-clean">Staff member ka naam <span class="opt-text">(Optional)</span></label>
+              <input type="text" id="staff_of_month_name_text" class="editorial-input" placeholder="Staff member ka naam yahan likhein" autocomplete="off">
+            </div>
+
+            <div class="field-item">
+              <label for="staff_appreciation_reason" class="field-label-clean">Unke baare mein kuch kehna chahenge? <span class="opt-text">(Optional)</span></label>
+              <input type="text" id="staff_appreciation_reason" class="editorial-input" placeholder="Optional — share a few words" autocomplete="off">
+            </div>
+          </div>
+
+          <!-- Global submit error banner with retry -->
+          <div id="submit-error-banner" class="error-banner hidden" role="alert">
+            <span id="submit-error-msg">Feedback submit nahi ho paya. Please try again.</span>
+          </div>
+
+          <div class="action-dock-split">
+            <button type="button" id="btn-back-to-written" class="btn-flow-ghost">← Back</button>
+            <div class="action-right-group">
+              <button type="button" id="btn-skip-staff" class="btn-flow-secondary">Skip</button>
+              <button type="button" id="btn-final-submit" class="btn-flow-primary btn-submit-final">
+                <span id="submit-btn-label">Submit Feedback</span>
+                <span class="arrow-glyph">→</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- STEP: Confirmation Screen -->
+      <section id="step-success" class="flow-step hidden">
+        <div class="step-content text-center">
+          
+          <div class="success-glyph-wrap">
+            <span class="checkmark-glyph">✓</span>
+          </div>
+
+          <h1 class="editorial-hero-title">Thank you.</h1>
+          <p class="editorial-hero-sub">Aapka feedback successfully submit ho gaya hai.</p>
+
+          <div class="sub-id-chip">
+            Ref ID: <strong id="disp-final-id">FH-2026-XXXX</strong>
+          </div>
+
+          <!-- PRIMARY SHARED IPAD ACTION: Next Patient / Reset -->
+          <div class="next-patient-dock" style="margin-top: 36px;">
+            <button type="button" id="btn-next-patient" class="btn-next-patient-primary">
+              <span>Next Patient</span>
+              <span class="arrow-glyph">→</span>
+            </button>
+            <p class="reset-subtext">Agley patient ke liye new session start karein</p>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Centered Minimal Hospital Sub-Footer -->
+    <footer class="app-footer">
+      <p class="footer-brand-text">FEHMINA HOSPITAL & TRAUMA CENTRE • LUCKNOW</p>
+      <p class="footer-legal-text">25 Years of Healthcare Excellence (2001–2026)</p>
+    </footer>
+
+  </div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

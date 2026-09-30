@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Management Dashboard | Fehmina Hospital & Trauma Centre</title>
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="icon" href="/images/logo.png" type="image/png">
+</head>
+<body>
+
+  <!-- Login Modal / Screen (Visible when not authenticated) -->
+  <div id="login-screen" class="login-container">
+    <div class="login-card">
+      <div class="login-logo-wrap">
+        <img src="/images/logo.png" alt="Fehmina Hospital Logo" class="login-logo">
+      </div>
+      <h2 class="login-title">Hospital Management Login</h2>
+      <p class="login-subtitle">Fehmina Hospital Patient Feedback System</p>
+      
+      <form id="admin-login-form" novalidate>
+        <div class="form-group">
+          <label for="login-username">Username</label>
+          <input type="text" id="login-username" required class="form-control" placeholder="Enter admin username" autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" required class="form-control" placeholder="Enter password" autocomplete="current-password">
+        </div>
+        <div id="login-error" class="login-error hidden"></div>
+        <button type="submit" id="btn-login" class="btn-admin-primary">Log In to Dashboard</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Dashboard Container (Visible when authenticated) -->
+  <div id="dashboard-screen" class="dashboard-container hidden">
+    
+    <!-- Top Navigation -->
+    <header class="admin-nav">
+      <div class="nav-brand">
+        <img src="/images/logo.png" alt="Fehmina Logo" class="nav-logo">
+        <div>
+          <h1 class="nav-title">FEHMINA HOSPITAL</h1>
+          <p class="nav-sub">Executive Management & Patient Feedback Dashboard</p>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <a href="/patient" target="_blank" class="btn-nav-outline">📱 Patient iPad View</a>
+        <button id="btn-logout" class="btn-nav-logout">Logout</button>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="admin-main">
+
+      <!-- Global Filter Bar -->
+      <section class="filter-card">
+        <div class="filter-row">
+          <div class="filter-item">
+            <label for="filter-month">Month</label>
+            <input type="month" id="filter-month" class="filter-input">
+          </div>
+          <div class="filter-item">
+            <label for="filter-dept">Department</label>
+            <select id="filter-dept" class="filter-input">
+              <option value="">All Departments</option>
+            </select>
+          </div>
+          <div class="filter-item">
+            <label for="filter-ward">Ward</label>
+            <select id="filter-ward" class="filter-input">
+              <option value="">All Wards</option>
+            </select>
+          </div>
+          <div class="filter-item">
+            <label for="filter-rating">Rating</label>
+            <select id="filter-rating" class="filter-input">
+              <option value="">All Ratings</option>
+              <option value="5">5 Stars (Bahut Achha)</option>
+              <option value="4">4 Stars (Achha)</option>
+              <option value="3">3 Stars (Theek-thaak)</option>
+              <option value="2">2 Stars (Kharaab)</option>
+              <option value="1">1 Star (Bahut Kharaab)</option>
+            </select>
+          </div>
+          <div class="filter-buttons">
+            <button id="btn-apply-filters" class="btn-filter-apply">Apply Filter</button>
+            <button id="btn-reset-filters" class="btn-filter-reset">Reset</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- KPI Summary Cards (4 Relevant Healthcare KPIs) -->
+      <section class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-icon-wrap kpi-blue">📋</div>
+          <div class="kpi-body">
+            <span class="kpi-label">Total Responses</span>
+            <span class="kpi-value" id="kpi-total-responses">--</span>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-icon-wrap kpi-green">⭐</div>
+          <div class="kpi-body">
+            <span class="kpi-label">Avg Overall Rating</span>
+            <span class="kpi-value" id="kpi-avg-rating">-- <small>/ 5.0</small></span>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-icon-wrap kpi-gold">🏆</div>
+          <div class="kpi-body">
+            <span class="kpi-label">Staff Nominations</span>
+            <span class="kpi-value" id="kpi-staff-nominations">--</span>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-icon-wrap kpi-teal">💚</div>
+          <div class="kpi-body">
+            <span class="kpi-label">Satisfaction Rate</span>
+            <span class="kpi-value" id="kpi-satisfaction-rate">--%</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grid 2 Columns: Category Scorecard & Staff of the Month -->
+      <div class="admin-two-col">
+        
+        <!-- Category Scorecard -->
+        <section class="dashboard-card">
+          <div class="card-header">
+            <h2 class="card-title">📊 9 Core Touchpoints Scorecard</h2>
+            <span class="card-subtitle">Average score out of 5.0</span>
+          </div>
+          <div class="card-body">
+            <div class="score-list" id="category-score-list">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </section>
+
+        <!-- Staff of the Month Leaderboard -->
+        <section class="dashboard-card staff-leaderboard-card">
+          <div class="card-header">
+            <h2 class="card-title">🏆 Staff of the Month</h2>
+            <span class="card-subtitle" id="staff-month-label">Monthly Patient Nominations</span>
+          </div>
+          <div class="card-body">
+            
+            <div id="staff-podium-wrap" class="staff-podium-wrap">
+              <!-- Rendered via JS -->
+            </div>
+
+            <div class="staff-all-list-wrap">
+              <h3 class="section-small-title">All Staff Appreciations</h3>
+              <div id="staff-nominations-table" class="staff-nominations-table">
+                <!-- Rendered dynamically -->
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Rating Distribution & Monthly Trends -->
+      <div class="admin-two-col mt-md">
+        
+        <!-- Rating Distribution -->
+        <section class="dashboard-card">
+          <div class="card-header">
+            <h2 class="card-title">⭐ Rating Distribution</h2>
+            <span class="card-subtitle">Patient satisfaction breakdown</span>
+          </div>
+          <div class="card-body">
+            <div id="rating-distribution-bars" class="distribution-bars">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </section>
+
+        <!-- Monthly Trends -->
+        <section class="dashboard-card">
+          <div class="card-header">
+            <h2 class="card-title">📈 Monthly Response Volume</h2>
+            <span class="card-subtitle">Last 12 months history</span>
+          </div>
+          <div class="card-body">
+            <div id="monthly-trend-container" class="trend-chart-container">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Comprehensive Patient Submissions Explorer -->
+      <section class="dashboard-card mt-md">
+        <div class="card-header card-header-flex">
+          <div>
+            <h2 class="card-title">📝 Patient Submissions Explorer</h2>
+            <span class="card-subtitle">Complete records with patient contact, address, ratings & comments</span>
+          </div>
+          <div class="header-actions">
+            <input type="text" id="submission-search-input" class="table-search-input" placeholder="Search patient, phone, address, staff...">
+            <button id="btn-export-csv" class="btn-export">📥 Export CSV</button>
+            <button id="btn-trigger-backup" class="btn-backup">💾 Backup Database</button>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>ID & Date</th>
+                  <th>Patient Profile</th>
+                  <th>Department / Specialty</th>
+                  <th>Overall</th>
+                  <th>Clinical Breakdown</th>
+                  <th>Staff Nominated</th>
+                  <th>Written Comments</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="submissions-table-body">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Hospital Settings & Configuration Section -->
+      <section class="dashboard-card mt-md">
+        <div class="card-header">
+          <h2 class="card-title">⚙️ Hospital System Settings</h2>
+          <span class="card-subtitle">Central Google Sheet Sync & Departments Management</span>
+        </div>
+        <div class="card-body">
+          <form id="settings-form" class="settings-grid">
+            
+            <div class="form-group full-width">
+              <label for="set-google-sheet-url">📊 Central Google Sheet Webhook URL (Apps Script)</label>
+              <input type="url" id="set-google-sheet-url" class="form-control" placeholder="https://script.google.com/macros/s/.../exec">
+              <small class="help-text">Google Sheet mein patient submissions automatically save hone ke liye Apps Script Web App URL yahan paste karein.</small>
+              <div class="mt-xs" style="margin-top: 8px; display: flex; gap: 8px; flex-wrap: wrap;">
+                <button type="button" id="btn-test-sheets" class="btn-action-sm">🧪 Test Google Sheet Connection</button>
+                <button type="button" id="btn-sync-all-sheets" class="btn-action-sm">🔄 Sync All Submissions to Sheet</button>
+              </div>
+              <span id="sheets-status-msg" class="help-text" style="color: #007a3d; font-weight: 600;"></span>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="set-departments">Hospital Departments (Comma separated)</label>
+              <input type="text" id="set-departments" class="form-control">
+              <small class="help-text">e.g. Chest / Respiratory, Neurology, Orthopaedics, General Medicine, Surgery, Gynaecology, Pediatrics, Cardiology, Urology, Emergency, ICU</small>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="set-wards">Wards / Locations (Comma separated)</label>
+              <input type="text" id="set-wards" class="form-control">
+              <small class="help-text">e.g. General Ward, Female Ward, Private Room, Semi-Private, ICU, Emergency, OPD</small>
+            </div>
+
+            <div class="settings-actions full-width">
+              <button type="submit" id="btn-save-settings" class="btn-admin-primary">Save System Settings</button>
+              <span id="settings-status" class="settings-status-msg"></span>
+            </div>
+
+          </form>
+
+          <!-- Password change -->
+          <hr class="settings-hr">
+          <h3 class="section-small-title">Change Admin Password</h3>
+          <form id="password-change-form" class="password-form-inline">
+            <div class="form-group">
+              <input type="password" id="new-admin-password" class="form-control" placeholder="Enter new password (min 6 chars)" required>
+            </div>
+            <button type="submit" class="btn-admin-secondary">Update Password</button>
+            <span id="password-status" class="settings-status-msg"></span>
+          </form>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Complete Patient Submission Details Modal -->
+  <div id="submission-detail-modal" class="modal-overlay hidden">
+    <div class="modal-card modal-detail-card">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title" id="modal-title-id">Patient Feedback Details</h3>
+          <span class="modal-subtitle text-muted" id="modal-timestamp">--</span>
+        </div>
+        <button type="button" id="btn-close-detail-modal" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        
+        <!-- Patient Profile Box -->
+        <div class="detail-patient-box">
+          <div class="detail-patient-row">
+            <div>
+              <span class="detail-label">Patient Name</span>
+              <strong class="detail-val" id="modal-detail-name">--</strong>
+            </div>
+            <div>
+              <span class="detail-label">Mobile Number</span>
+              <strong class="detail-val"><a id="modal-detail-phone" href="" style="color:#007a3d;">--</a></strong>
+            </div>
+          </div>
+          <div class="detail-patient-row mt-xs">
+            <div>
+              <span class="detail-label">Department / Specialty</span>
+              <span class="badge-dept" id="modal-detail-dept">--</span>
+            </div>
+            <div>
+              <span class="detail-label">Address / Pata</span>
+              <span class="detail-val" id="modal-detail-address">--</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9 Rating Categories Breakdown -->
+        <h4 class="detail-section-title mt-md">Ratings Breakdown (1 to 5 Stars)</h4>
+        <div class="detail-ratings-grid" id="modal-ratings-grid">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <!-- Staff Appreciation Box -->
+        <div id="modal-staff-box" class="detail-staff-box mt-md">
+          <h4 class="detail-section-title">🏆 Staff of the Month Nomination</h4>
+          <p><strong id="modal-staff-name">--</strong></p>
+          <p class="text-muted" id="modal-staff-reason" style="font-style: italic; margin-top: 4px; font-size: 0.88rem;">--</p>
+        </div>
+
+        <!-- Written Comments Box -->
+        <div id="modal-comments-box" class="detail-comments-box mt-md">
+          <h4 class="detail-section-title">💬 Patient Written Feedback</h4>
+          <p id="modal-comments-text" style="font-size: 0.9rem; line-height: 1.5; color: #1e293b;">--</p>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn-modal-done" class="btn-admin-primary">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/admin.js"></script>
+</body>
+</html>
